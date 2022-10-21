@@ -59,9 +59,9 @@ public class ClanDAO {
         statement.setInt(4, clan.getBalance() + goldAdded);
         statement.setInt(5, goldAdded);
         statement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
-//        statement.setLong(7, System.currentTimeMillis());
 
         statement.executeUpdate();
+        statement.close();
     }
 
     public static List<String> getLogs(Clan clan) throws SQLException {
@@ -86,6 +86,8 @@ public class ClanDAO {
             logs.add(sb);
         }
 
+        statement.close();
+
         return logs;
     }
 
@@ -108,6 +110,8 @@ public class ClanDAO {
             items.add(clan);
         }
 
+        statement.close();
+
         return items;
     }
 
@@ -122,6 +126,7 @@ public class ClanDAO {
         statement.setInt(4, clan.getAtomicBalance().intValue());
 
         statement.executeUpdate();
+        statement.close();
     }
 
     public static void update(Clan clan) throws SQLException {
@@ -135,6 +140,7 @@ public class ClanDAO {
         statement.setInt(4, clan.getId());
 
         statement.executeUpdate();
+        statement.close();
     }
 
     public static Optional<Clan> getItem(int id) throws SQLException {
@@ -155,6 +161,8 @@ public class ClanDAO {
             clan.setAtomicBalance(resultSet.getInt("atomicBalance"));
         }
 
+        statement.close();
+
         return Optional.ofNullable(clan);
     }
 
@@ -166,5 +174,6 @@ public class ClanDAO {
         statement.setInt(1, id);
 
         statement.executeUpdate();
+        statement.close();
     }
 }

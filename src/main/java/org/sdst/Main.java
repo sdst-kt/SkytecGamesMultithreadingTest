@@ -22,7 +22,7 @@ public class Main {
     private static List<Integer> generatedValues;
     private static ExecutorService executorService;
     private static HashMap<MultithreadingPatterns, Long> executionTime = new HashMap<>();
-    private static boolean useGenerated = true; //spicy feelings inc
+    private static boolean useGenerated = false; //spicy feelings inc
 
     public static void main(String[] args) {
         if(useGenerated)
@@ -68,7 +68,7 @@ public class Main {
 
     private static void resetClanBalance() {
         for (Clan clan : clans) {
-            ClanService.getClanLogs(clan);
+//            ClanService.getClanLogs(clan);
 
             synchronized (clan) {
                 clan.setBalance(0);
@@ -156,7 +156,6 @@ public class Main {
                 }
             });
             clanProcessor.start();
-            clanProcessor.join();
         }
     }
 
@@ -173,11 +172,6 @@ public class Main {
                     });
 
                     addBalanceTask.start();
-                    try {
-                        addBalanceTask.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
             });
         }
@@ -194,11 +188,6 @@ public class Main {
                     Thread addBalanceTask = new Thread(() -> clan.addAtomicBalance(genVal));
 
                     addBalanceTask.start();
-                    try {
-                        addBalanceTask.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
             });
         }
@@ -232,11 +221,6 @@ public class Main {
                     });
 
                     addBalanceTask.start();
-                    try {
-                        addBalanceTask.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
             });
         }
